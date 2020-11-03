@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package fabricacoches;
 
 /**
@@ -20,6 +16,10 @@ public class Coche {
         this.capo = capo;
         this.motor = motor;
         this.pintura = pintura;
+    }
+
+    Coche() {
+        
     }
 
     public int getNumeroPuertas() {

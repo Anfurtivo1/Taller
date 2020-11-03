@@ -1,25 +1,54 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package fabricacoches;
+
+import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author anfur
  */
 public class BrazoPuertasCapo extends Thread{
+    private Acciones accion= new Acciones();
+    private static  Coche coche;
+    private boolean activo = true;
+    Semaphore turnos = new Semaphore(1);
+
+    BrazoPuertasCapo(Coche coche, Semaphore turnos) {
+        this.coche=coche;
+        this.turnos=turnos;
+    }
+    
+    
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
     
     
     
-    public synchronized void ponerPuerta(Coche coche){
+    @Override
+    public void run(){
         if (coche.getNumeroPuertas()<5) {
-            coche.setNumeroPuertas(coche.getNumeroPuertas()+1);
-        }
-        else{
-            System.out.println("El brazo se quedará inactivo");
-            //this.isActivo=false;
+            try {
+            turnos.acquire();
+            accion.ponerPuerta(coche);
+            turnos.release();
+            } catch (InterruptedException ex) {
+            System.out.println("Error en "+ex);
+            }
+        System.out.println("El brazo segundo se quedará inactivo hasta que el motor se ponga");
+        this.setActivo(false);
+        }else{
+            accion.ponerCapo(coche);
         }
     }
+    
+    
+    
 }
