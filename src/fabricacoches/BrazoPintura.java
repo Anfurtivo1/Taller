@@ -9,7 +9,6 @@ import java.util.logging.Logger;
  * @author anfur
  */
 public class BrazoPintura extends Thread{
-    private Acciones accion= new Acciones();
     private static Coche coche;
     private boolean activo = true;
     Semaphore turnos = new Semaphore(1);
@@ -31,7 +30,7 @@ public class BrazoPintura extends Thread{
     public void run(){
         try {
             turnos.acquire();
-            accion.ponerPintura(coche);
+            coche.ponerPintura(coche);
             Thread.sleep(3000);
             turnos.release();
             this.setActivo(false);

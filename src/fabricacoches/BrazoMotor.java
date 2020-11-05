@@ -9,7 +9,6 @@ import java.util.logging.Logger;
  * @author anfur
  */
 public class BrazoMotor extends Thread{
-    private Acciones accion= new Acciones();
     private static Coche coche;
     private boolean activo = true;
     Semaphore turnos = new Semaphore(1);
@@ -32,7 +31,7 @@ public class BrazoMotor extends Thread{
     public void run(){
         try {
                 turnos.acquire();
-                accion.ponerMotor(coche);
+                coche.ponerMotor(coche);
                 Thread.sleep(3000);
                 turnos.release();
                 this.setActivo(false);

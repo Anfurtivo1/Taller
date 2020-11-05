@@ -10,7 +10,6 @@ import java.util.logging.Logger;
  * @author anfur
  */
 public class BrazoPuertasCapo extends Thread{
-    private Acciones accion= new Acciones();
     private static  Coche coche;
     private boolean activo = true;
     Semaphore turnos = new Semaphore(1);
@@ -37,7 +36,7 @@ public class BrazoPuertasCapo extends Thread{
         if (coche.getNumeroPuertas()<5) {
             try {
             turnos.acquire();
-            accion.ponerPuerta(coche);
+            coche.ponerPuerta(coche);
             turnos.release();
             } catch (InterruptedException ex) {
             System.out.println("Error en "+ex);
@@ -45,7 +44,7 @@ public class BrazoPuertasCapo extends Thread{
         System.out.println("El brazo segundo se quedará inactivo hasta que el motor se ponga");
         this.setActivo(false);
         }else{
-            accion.ponerCapo(coche);
+            coche.ponerCapo(coche);
         }
     }
     
